@@ -1,0 +1,17 @@
+#include<stdio.h>
+
+int main(){
+  
+   int vetor[10],i;
+   
+   for(i=0; i<10;i++){ 
+   printf("Digite um numero: \n");
+   scanf("%d",&vetor[i]);
+   }
+   
+   printf("Numeros digitados: ");
+  for(i=0; i<10;i++){ 
+   printf("%d ",vetor[i]);
+  }
+  return 0;
+}
