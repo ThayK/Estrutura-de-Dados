@@ -1,0 +1,13 @@
+int EncontrarValor(int vetor[10],int valorencontrar)
+inicio
+ variaveis
+ i,x=0 inteiros
+   para i de 0 ate tamanho 10
+    inicio
+         se vetor[i]==valorencontrar
+    inicio 
+    x=i;
+     fim
+ fim
+ mostrar  (x)
+fim
