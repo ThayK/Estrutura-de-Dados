@@ -1,0 +1,239 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+
+
+struct estrutura{
+	
+	int novo;
+	struct estrutura *Proximo;
+	
+};
+
+typedef struct estrutura Lista;
+
+
+
+void inicia(Lista *LISTA);
+int Perguntas(void);
+void Casos(int op,Lista *LISTA);
+void InserirInicio(Lista *LISTA);
+int vazia(Lista *LISTA);
+void InserirFim(Lista *LISTA);
+void Mostrar (Lista *LISTA);
+void Encontrar(Lista *LISTA);
+void Remover(Lista *LISTA);
+void ApagaLista(Lista *LISTA);
+
+int main(){
+	
+	Lista *LISTA=(Lista*)malloc(sizeof(Lista));
+	 if(!LISTA){
+	 	printf("Nao tem espaco!");
+	 	exit(1);
+	 }
+	 
+	 inicia(LISTA);
+	 int op;
+	 do{
+	 op=Perguntas();	
+	 Casos(op,LISTA);	
+	 }while(op);
+	
+	
+	return 0;
+}
+void inicia(Lista *LISTA){
+	LISTA->Proximo=NULL;
+}
+
+int Perguntas(void){
+	int opcao;
+	
+	printf("\nOpcoes:\n");
+	printf("(1)Inserir no inicio.\n");
+	printf("(2)Inserir no fim.\n");
+	printf("(3)Encontrar.\n");
+	printf("(4)Remover.\n");
+	printf("(5)Mostrar\n");
+	printf("(6)Apagar Lista\n");
+	printf("Resposta: ");
+	scanf("%d",&opcao);
+	
+	return opcao;
+}
+
+void Casos(int op,Lista *LISTA){
+	
+	switch(op){
+		case 1:
+			InserirInicio(LISTA);
+			break;
+		case 2:
+			InserirFim(LISTA);
+			break;
+		case 3:
+			Encontrar(LISTA);
+			break;
+		case 4:
+			Remover(LISTA);
+			break;
+		case 5:
+			Mostrar(LISTA);
+			break;
+		case 6:
+		    ApagaLista(LISTA);	
+			break;
+			
+		default:
+			printf("Escolha errada!");
+		
+		
+	}
+	
+}
+
+void InserirInicio(Lista *LISTA){
+  
+  Lista *ListaInicio=(Lista*)malloc(sizeof(Lista));
+  
+   if(!ListaInicio){
+   	printf("Sem memoria!");
+   	exit(1);
+   }
+   
+   printf("Digite o novo numero: ");
+   scanf("%d",&ListaInicio->novo);
+    
+    Lista *AntigoNumeroDeFrente =LISTA->Proximo;
+    LISTA->Proximo=ListaInicio;
+    ListaInicio->Proximo=AntigoNumeroDeFrente;
+    
+   
+}
+int vazia(Lista *LISTA){
+   if(LISTA->Proximo==NULL){
+   	return 1;
+   }
+   else{
+   	return 0;
+   }
+   	
+}
+void InserirFim(Lista *LISTA){
+  Lista *ListaFim=(Lista*)malloc(sizeof(Lista));
+  
+   if(!ListaFim){
+   	 printf("Sem memoria");
+   	 exit(1);
+   }
+   
+  printf("Digite um valor: ");
+  scanf("%d",&ListaFim->novo);
+  
+   ListaFim->Proximo=NULL;
+   
+    if(vazia(LISTA)){
+    	LISTA->Proximo=ListaFim;
+	}
+	else{
+		Lista *aux=LISTA->Proximo;
+		while(aux->Proximo!=NULL){
+			aux=aux->Proximo;
+		}
+		
+		aux->Proximo=ListaFim;
+	} 
+	
+}
+
+void Mostrar (Lista *LISTA){
+	
+	
+    if(vazia(LISTA)){
+    	printf("Lista vazia");
+    	exit(1);
+	}
+	Lista *prox;
+	prox=LISTA->Proximo;
+    
+    while(prox!=NULL){
+    	printf("%5d",prox->novo);
+    	prox=prox->Proximo;
+	}
+	
+	printf("\n");
+	
+	
+}
+
+void Encontrar(Lista *LISTA){
+	int encontrar;
+	int cont=0;
+	
+	  if(vazia(LISTA)){
+	  	printf("Lista vazia");
+	  	exit(1);
+	  }
+	  
+	  //Lista *encontrar; 
+	  printf("Digite o numero que deseja buscar: ");
+	  scanf("%d",&encontrar);
+	 
+	  
+	  while(LISTA!=NULL){
+	  	 cont++;
+		   if(LISTA->novo==encontrar){
+			 printf("Posicao %d",cont);	  	 	
+		   }
+		   LISTA=LISTA->Proximo;
+	 
+	  }
+			
+ }
+   
+void Remover(Lista *LISTA) 	  {
+  
+  
+    int num;
+  	if(vazia(LISTA)){
+  		printf("Lista vazia");
+  		exit(1);
+	  }
+
+	  Lista *Atual = LISTA;		  
+	  Lista *ProxAposPrim=LISTA->Proximo;
+	  
+	 printf("Digite o valor que deseja remover: ");
+	 scanf("%d",&num);
+	
+	  while (ProxAposPrim->novo!=num){
+		Atual=ProxAposPrim;
+		ProxAposPrim=ProxAposPrim->Proximo;
+	 }
+       Atual->Proximo=ProxAposPrim->Proximo;
+       free(ProxAposPrim);
+}
+	  
+void ApagaLista(Lista *LISTA){
+  
+   if(!vazia(LISTA)){
+		Lista *proxNode,
+			  *atual;
+		
+	  atual = LISTA->Proximo;
+       
+		while(atual!= NULL){
+			
+			proxNode = atual->Proximo;   //Desenha
+			free(atual);
+			atual = proxNode;
+		  
+		}
+		LISTA->Proximo=NULL;
+	}
+    
+	printf("Lista vazia");
+    		
+
+}
